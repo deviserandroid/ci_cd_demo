@@ -31,8 +31,11 @@ jobs:
       #- name: Grant Gradle Permission to Github Workflow
       #  run: chmod +x android/gradlew
 
-      - name: Compile Flutter Project
-        run: flutter pub get && flutter build apk --release
+      - name: Fetch plugins Flutter Project
+        run: flutter pub get
+
+      - name: Build Android App
+        run: flutter build apk --release
 
       - name: Push Releases to Github Repo
         uses: ncipollo/release-action@v1
