@@ -17,11 +17,10 @@ jobs:
       - name: "Code Checkout"
         uses: actions/checkout@v1
 
-      - name: Basic Setup via Composite
-        uses: ./.github/action_basic_setup
+      - name: Build Android App
+        uses: ./.github/action_build_android_app
 
-      - name: Fetch plugins Flutter Project
-        run: flutter pub get
+
 
 
 

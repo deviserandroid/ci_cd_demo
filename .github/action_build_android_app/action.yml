@@ -1,0 +1,14 @@
+
+name: Build Android App
+description: "Fetch the dart dependencies and prepare the android build"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Fetch plugins Flutter Project
+      run: flutter pub get
+      uses: ./.github/action_basic_setup
+
+    - name: Build Android App
+      run: flutter build apk --release
+      uses: ./.github/action_basic_setup
