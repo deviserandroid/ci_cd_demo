@@ -58,7 +58,7 @@ jobs:
         uses: actions/download-artifact@v4.1.8
         with:
           # Name of the artifact to download. If unspecified, all artifacts for the run are downloaded.
-          name: "uploaded-android-app.apk" # "app-release.apk" # optional
+          name: "app-release.apk" # "app-release.apk" # optional
           # Destination path. Supports basic tilde expansion. Defaults to $GITHUB_WORKSPACE
           path: ".github/artifacts/" # optional
           # A glob pattern matching the artifacts that should be downloaded. Ignored if name is specified.
@@ -82,7 +82,7 @@ jobs:
           # Content of service credentials file
           serviceCredentialsFileContent: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }} # optional
           # Artifact to upload (.apk or .ipa)
-          file: ".github/artifacts/uploaded-android-app.apk"
+          file: ".github/artifacts/app-release.apk"
           # file: "build/app/outputs/flutter-apk/app-release.apk"
           # Distribution groups
           groups: "codknox-testers" # optional
