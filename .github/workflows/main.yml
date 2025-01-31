@@ -42,11 +42,11 @@ jobs:
           token: ${{ secrets.TOKEN }}
 
       - name: Firebase App Distribution
-        uses: wzieba/Firebase-Distribution-Github-Action@v1.7.0
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
           appId: "1:296310144448:android:7e312254b40b06f99d5c25"
           # Content of service credentials file
-          serviceCredentialsFileContent: ${{ secrets.FIREBASE_SERVICE_ACCOUNT}} # optional
+          serviceCredentialsFileContent: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }} # optional
           # Artifact to upload (.apk or .ipa)
           file: "build/app/outputs/flutter-apk/app-release.apk"
           # Distribution groups
