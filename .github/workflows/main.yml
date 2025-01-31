@@ -82,7 +82,7 @@ jobs:
           # Content of service credentials file
           serviceCredentialsFileContent: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }} # optional
           # Artifact to upload (.apk or .ipa)
-          file: "/Users/zimble2020/Desktop/github_artifacts/app-release.apk"
+          file: ".github/artifacts/uploaded-android-app.apk"
           # file: "build/app/outputs/flutter-apk/app-release.apk"
           # Distribution groups
           groups: "codknox-testers" # optional
