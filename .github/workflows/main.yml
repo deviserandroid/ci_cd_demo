@@ -73,7 +73,7 @@ jobs:
           # run-id: # optional, default is ${{ github.run_id }}
 
       - name: List downloaded artifacts
-        run: ls -la ./github/artifacts/
+        run: ls -la .github/artifacts
 
       - name: Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
