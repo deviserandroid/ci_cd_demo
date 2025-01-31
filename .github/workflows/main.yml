@@ -14,7 +14,7 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - name: "Code Checkout"
+      - name: Checkout Code
         uses: actions/checkout@v1
 
       - name: Basic Setup via Composite
@@ -30,6 +30,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: build-android
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
       - name: Distribute build on the Firebase
         uses: ./.github/action_distribute_build_on_firebase
 
