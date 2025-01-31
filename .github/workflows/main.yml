@@ -15,7 +15,7 @@ jobs:
 
     steps:
       - name: "Code Checkout" # Must be in the root workflow
-        uses: action_basic_setup/checkout@v1
+        uses: actions/checkout@v1
 
       - name: Basic Setup via Composite
         uses: ./.github/action_basic_setup/action.yml
