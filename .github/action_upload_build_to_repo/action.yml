@@ -1,0 +1,16 @@
+
+name: Upload Build Artifact to the Repo
+description: "Upload the build apk generated locally on the system, to the Github
+Repository. In addition, add tag to it."
+
+runs:
+  using: composite
+
+  steps:
+    - name: Push Releases to Github Repo
+      uses: ncipollo/release-action@v1
+      with:
+        artifacts: "build/app/outputs/flutter-apk/app-release.apk"
+        tag: v1.0.${{ github.run_number }}
+        commit: pipeline #This should be the same branch for which the workflow is running
+        token: ${{ secrets.TOKEN }}
