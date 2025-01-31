@@ -7,8 +7,8 @@ runs:
   steps:
     - name: Fetch plugins Flutter Project
       run: flutter pub get
-      uses: ./.github/action_basic_setup
+      shell: bash
 
     - name: Build Android App
       run: flutter build apk --release
-      uses: ./.github/action_basic_setup
+      shell: bash
