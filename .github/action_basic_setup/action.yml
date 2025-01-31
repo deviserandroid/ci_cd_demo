@@ -7,9 +7,6 @@ description: "Setup include following setup:
 runs:
   using: "composite"
   steps:
-    - name: "Code Checkout"
-      uses: actions/checkout@v1
-
     - name: Java Setup
       uses: actions/setup-java@v2
       with:
