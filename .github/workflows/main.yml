@@ -38,8 +38,25 @@ jobs:
         with:
           artifacts: "build/app/outputs/flutter-apk/app-release.apk"
           tag: v1.0.${{ github.run_number }}
-          commit: pipeline
+          commit: pipeline #This should be the same branch for which the workflow is running
           token: ${{ secrets.TOKEN }}
+
+      - name: Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1.7.0
+        with:
+          appId: "1:296310144448:android:7e312254b40b06f99d5c25"
+          # Content of service credentials file
+          serviceCredentialsFileContent: ${{ secrets.FIREBASE_SERVICE_ACCOUNT}} # optional
+          # Artifact to upload (.apk or .ipa)
+          file: "build/app/outputs/flutter-apk/app-release.apk"
+          # Distribution groups
+          groups: "codknox-testers" # optional
+          # Distribution testers
+          releaseNotes: "Test the core features of the app v(1.0.${{ github.run_number }})" # optional
+          # Flag that can included to print verbose log output.
+          debug: true
+
+
 
 
 
