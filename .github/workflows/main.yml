@@ -33,13 +33,19 @@ jobs:
       - name: Build Android App
         run: flutter build apk --release
 
-      - name: Push Releases to Github Repo
-        uses: ncipollo/release-action@v1
+      - name: Upload Android App
+        uses: actions/upload-artifact@v2
         with:
-          artifacts: "build/app/outputs/flutter-apk/app-release.apk"
-          tag: v1.0.${{ github.run_number }}
-          commit: pipeline #This should be the same branch for which the workflow is running
-          token: ${{ secrets.TOKEN }}
+          name: uploaded-android-app.apk
+          path: "build/app/outputs/flutter-apk/app-release.apk"
+
+#      - name: Push Releases to Github Repo
+#        uses: ncipollo/release-action@v1
+#        with:
+#          artifacts: "build/app/outputs/flutter-apk/app-release.apk"
+#          tag: v1.0.${{ github.run_number }}
+#          commit: pipeline #This should be the same branch for which the workflow is running
+#          token: ${{ secrets.TOKEN }}
 
   distribute:
     runs-on: ubuntu-latest
@@ -52,7 +58,7 @@ jobs:
         uses: actions/download-artifact@v4.1.8
         with:
           # Name of the artifact to download. If unspecified, all artifacts for the run are downloaded.
-          name: "app-release.apk" # optional
+          name: "uploaded-android-app.apk" # "app-release.apk" # optional
           # Destination path. Supports basic tilde expansion. Defaults to $GITHUB_WORKSPACE
           path: "/Users/zimble2020/Desktop/github_artifacts/" # optional
           # A glob pattern matching the artifacts that should be downloaded. Ignored if name is specified.
