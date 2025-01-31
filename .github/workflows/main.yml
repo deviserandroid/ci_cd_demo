@@ -21,15 +21,11 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: 17
-          #cache: 'gradle' (Error by Github Action: Invalid input)
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v1
         with:
           flutter-version: '3.27.3'
-
-      #- name: Grant Gradle Permission to Github Workflow
-      #  run: chmod +x android/gradlew
 
       - name: Fetch plugins Flutter Project
         run: flutter pub get
@@ -42,6 +38,8 @@ jobs:
         with:
           artifacts: "build/app/outputs/flutter-apk/app-release.apk"
           tag: v1.0.${{ github.run_number }}
+          commit: pipeline
           token: ${{ secrets.TOKEN }}
+
 
 
