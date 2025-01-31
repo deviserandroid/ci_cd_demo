@@ -15,7 +15,7 @@ jobs:
 
     steps:
       - name: Basic Setup via Composite
-        uses: .github/actions/action_basic_setup.yml
+        uses: ./.github/action_basic_setup/action.yml
 
       - name: Fetch plugins Flutter Project
         run: flutter pub get
@@ -24,7 +24,7 @@ jobs:
         run: flutter build apk --release
 
       - name: Upload Android App
-        uses: actions/upload-artifact@v4
+        uses: action_basic_setup/upload-artifact@v4
         with:
           name: app-release.apk
           path: "build/app/outputs/flutter-apk/app-release.apk"
@@ -42,10 +42,10 @@ jobs:
     needs: build-android
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v2
+        uses: action_basic_setup/checkout@v2
 
       - name: Download a Android APK
-        uses: actions/download-artifact@v4.1.8
+        uses: action_basic_setup/download-artifact@v4.1.8
         with:
           # Name of the artifact to download. If unspecified, all artifacts for the run are downloaded.
           name: "app-release.apk" # "app-release.apk" # optional
