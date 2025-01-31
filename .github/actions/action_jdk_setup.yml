@@ -1,0 +1,21 @@
+
+name: CI Setup
+description: "Setup include following setup:
+- Java Setup
+- Flutter Setup"
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v1
+
+    - name: Java Setup
+      uses: actions/setup-java@v2
+      with:
+        distribution: 'temurin'
+        java-version: 17
+
+    - name: Flutter Setup
+      uses: subosito/flutter-action@v1
+      with:
+        flutter-version: '3.27.3'
