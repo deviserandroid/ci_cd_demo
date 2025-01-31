@@ -7,8 +7,11 @@ description: "Setup include following setup:
 runs:
   using: "composite"
   steps:
+    - name: "Code Checkout"
+      uses: actions/checkout@v1
+
     - name: Java Setup
-      uses: action_basic_setup/setup-java@v2
+      uses: actions/setup-java@v2
       with:
         distribution: 'temurin'
         java-version: 17
