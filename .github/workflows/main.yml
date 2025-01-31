@@ -1,0 +1,43 @@
+name: Build and Analyze
+
+on:
+  pull_request:
+    branches:
+      - main
+
+  push:
+    branches:
+      - pipeline
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Setup JDK
+        uses: actions/setup-java@v1
+        with:
+          distribution: 'temurin'
+          java-version: 17
+          cache: 'gradle'
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '3.27.3'
+
+      - name: Grant Gradle Permission to Github Workflow
+        run: chmod +x gradlew
+
+      - name: Compile Flutter Project
+        run: flutter pub get && flutter build apk --release
+
+      - name: Push Releases to Github Repo
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "build/app/outputs/flutter-apk/app-release.apk"
+          tag: 'v1.0.${{secrets.TOKEN}}'
+
+
