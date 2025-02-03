@@ -22,8 +22,12 @@ jobs:
       - name: Basic Setup via Composite
         uses: ./.github/action_basic_setup
 
+      - run: pwd
+      - run: ls
       - run: cd ios
       - run: pwd
+      - run: ls
+      - run: pod init
       #- run: pod deintegrate
       - run: pod install
       - run: pod update
