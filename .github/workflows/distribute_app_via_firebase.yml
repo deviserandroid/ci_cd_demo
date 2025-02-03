@@ -23,7 +23,8 @@ jobs:
         uses: ./.github/action_basic_setup
 
       - run: cd ios
-      - run: pod deintegrate
+      - run: pwd
+      #- run: pod deintegrate
       - run: pod install
       - run: pod update
       - run: cd ..
