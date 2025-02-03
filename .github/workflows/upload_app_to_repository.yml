@@ -1,0 +1,23 @@
+name: Build App and Distribute it via Firebase
+
+on:
+  push:
+    branches:
+      - artifact
+
+jobs:
+  build-android:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Basic Setup via Composite
+        uses: ./.github/action_basic_setup
+
+      - name: Build Android App
+        uses: ./.github/action_build_android_app
+
+      - name: Upload Android App to the Repository
+        uses: ./.github/action_upload_build_to_repo
