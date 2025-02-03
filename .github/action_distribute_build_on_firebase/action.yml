@@ -5,6 +5,9 @@ description: ""
 runs:
   using: composite
   steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
     - name: Upload Android App
       uses: actions/upload-artifact@v4
       with:

@@ -15,7 +15,7 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
 
       - name: Basic Setup via Composite
         uses: ./.github/action_basic_setup
