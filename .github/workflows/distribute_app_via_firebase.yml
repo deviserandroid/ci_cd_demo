@@ -31,14 +31,14 @@ jobs:
             pod update
 
       - name: Build iOS App
-        run: flutter build ipa --release --no-codesign
+        run: flutter build ipa --release
         working-directory: ./
 
       - name: Upload ipa on Repository Environment
         uses: actions/upload-artifact@v4
         with:
           name: ci_cd_demo.ipa
-          path: "build/ios/ipa/"
+          path: "build/ios/ipa/ci_cd_demo.ipa"
 
   # Job 4 (Depends upon Job 3)
   distribute-ipa:
