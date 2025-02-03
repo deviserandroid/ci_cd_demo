@@ -25,7 +25,7 @@ jobs:
       - name: Set Up CocoaPods
         run: |
             cd ios 
-            pod init
+            if [ -f "Podfile" ]; then echo "Podfile exists."; else pod init; fi
             pod deintegrate
             pod install
             pod update
