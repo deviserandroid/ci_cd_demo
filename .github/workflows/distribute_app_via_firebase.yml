@@ -34,18 +34,13 @@ jobs:
         run: flutter build ipa --release --no-codesign
         working-directory: ./
 
-      - run: ls -R build/ios/archive/Runner.xcarchive/Products/Applications
-
       - run: mkdir Payload
         working-directory: build/ios/archive/Runner.xcarchive/Products/Applications
-
-      - run: ls -R build/ios/archive/Runner.xcarchive/Products/Applications
 
       - run: mv Runner.app/ Payload
         working-directory: build/ios/archive/Runner.xcarchive/Products/Applications
 
-      - run: ls -R
-        working-directory: build/ios/archive/Runner.xcarchive/Products/Applications/Payload
+      - run: ls -R build/ios/archive/Runner.xcarchive/Products/Applications/Payload
 
       - name: Zip output
         run: zip -qq -r -9 FlutterIpaExport.ipa Payload
@@ -84,7 +79,7 @@ jobs:
           # Important: Repository `secrets` can only be accessed in the main workflow file
           serviceCredentialsFileContent: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }} # optional
           # Artifact to upload (.apk or .ipa)
-          file: ".github/artifacts/ci_cd_demo.ipa"
+          file: ".github/artifacts/FlutterIpaExport.ipa"
           # Distribution groups
           groups: "codknox-testers" # optional
           # Distribution testers
