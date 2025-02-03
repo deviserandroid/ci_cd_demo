@@ -22,19 +22,17 @@ jobs:
       - name: Basic Setup via Composite
         uses: ./.github/action_basic_setup
 
-      - run: pwd
-      - run: ls
-      - run: cd ios
-      - run: pwd
-      - run: ls
       - run: pod init
-      #- run: pod deintegrate
+        working-directory: ./ios
+
+      - run: pod init
+      - run: pod deintegrate
       - run: pod install
       - run: pod update
-      - run: cd ..
 
       - name: Build iOS App
         run: flutter build ipa --release --no-codesign
+        working-directory: ./
 
       - name: Upload ipa on Repository Environment
         uses: actions/upload-artifact@v4
