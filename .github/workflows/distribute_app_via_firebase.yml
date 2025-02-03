@@ -22,13 +22,13 @@ jobs:
       - name: Basic Setup via Composite
         uses: ./.github/action_basic_setup
 
-      - run: pod init
-        working-directory: ./ios
-
-      - run: pod init
-      - run: pod deintegrate
-      - run: pod install
-      - run: pod update
+      - name: Set Up CocoaPods
+        run: |
+            cd ios 
+            pod init
+            pod deintegrate
+            pod install
+            pod update
 
       - name: Build iOS App
         run: flutter build ipa --release --no-codesign
