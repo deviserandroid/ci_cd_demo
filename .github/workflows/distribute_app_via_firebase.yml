@@ -38,7 +38,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ci_cd_demo.ipa
-          path: "build/ios/ipa/ci_cd_demo.ipa"
+          path: "build/ios/ipa/"
 
   # Job 4 (Depends upon Job 3)
   distribute-ipa:
