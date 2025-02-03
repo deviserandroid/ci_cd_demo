@@ -72,6 +72,9 @@ jobs:
     runs-on: macos-latest
 
     steps:
+      - name: Basic Setup via Composite
+        uses: ./.github/action_basic_setup
+
       - name: Build iOS App
         run: flutter build ipa --release
 
