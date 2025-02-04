@@ -23,7 +23,7 @@ jobs:
         uses: ./.github/action_basic_setup
 
       - name: Authenticate with Apple
-        uses: apple-actions/import-certificate@v2
+        uses: apple-actions/import-codesign-certs@v3
         with:
           p12-file-base64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
           p12-password: ${{ secrets.P12_PASSWORD }}
