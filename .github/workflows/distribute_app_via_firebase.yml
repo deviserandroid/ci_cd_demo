@@ -32,7 +32,7 @@ jobs:
             pod update
 
       - name: Authenticate with Apple
-        uses: apple-actions/import-codesign-certs@v3
+        uses: apple-actions/import-certificate@v2 # apple-actions/import-codesign-certs@v3
         with:
           p12-file-base64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
           p12-password: ${{ secrets.P12_PASSWORD }}
