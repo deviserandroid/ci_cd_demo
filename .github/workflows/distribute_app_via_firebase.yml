@@ -72,9 +72,9 @@ jobs:
 #            cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
 
       - name: Build iOS App
-        run: xcodebuild -exportArchive -archivePath build/ios/archive/Runner.xcarchive -exportPath build/ios/ipa -allowProvisioningUpdates
+        run: xcodebuild -exportArchive -archivePath build/ios/archive/Runner.xcarchive -exportPath build/ios/ipa -exportOptionsPlist ExportOptions.plist -allowProvisioningUpdates
         #run: flutter build ipa --release
-        working-directory: ./
+        working-directory: ./ios
 
       - run: mkdir Payload
         working-directory: build/ios/archive/Runner.xcarchive/Products/Applications
