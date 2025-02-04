@@ -73,6 +73,7 @@ jobs:
 
       - name: Build iOS Archive
         run: xcodebuild archive -scheme "Runner" -sdk iphoneos -destination generic/platform=iOS -archivePath build/ios/archive/Runner.xcarchive
+        working-directory: ./ios
 
       - name: Export Archive
         run: xcodebuild -exportArchive -archivePath build/ios/archive/Runner.xcarchive -exportPath build/ios/ipa -exportOptionsPlist ios/ExportOptions.plist -allowProvisioningUpdates
