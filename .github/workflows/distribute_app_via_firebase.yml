@@ -61,7 +61,7 @@ jobs:
             pod update
 
       - name: Build iOS App
-        run: flutter build ipa --release --no-codesign
+        run: flutter build ipa --release
         working-directory: ./
 
       - run: mkdir Payload
