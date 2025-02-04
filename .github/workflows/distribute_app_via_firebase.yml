@@ -72,7 +72,7 @@ jobs:
 #            cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
 
       - name: Build iOS Archive
-        run: xcodebuild archive -scheme "Runner" -sdk iphoneos -destination generic/platform=iOS -archivePath build/ios/archive/Runner.xcarchive
+        run: xcodebuild archive -scheme "Runner" -sdk iphoneos -destination generic/platform=iOS -archivePath build/ios/archive/Runner.xcarchive -allowProvisioningUpdates
         working-directory: ./ios
 
       - name: Export Archive
