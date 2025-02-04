@@ -31,14 +31,27 @@ jobs:
             pod install
             pod update
 
-      - name: Authenticate with Apple
-        uses: apple-actions/import-certificate@v2 # apple-actions/import-codesign-certs@v3
+      - name: Install Profile
+        uses: nickwph/apple-build-certificate-action@v1
         with:
-          p12-file-base64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
-          p12-password: ${{ secrets.P12_PASSWORD }}
-          keychain-name: "ios-build.keychain"
-          keychain-password: ${{ secrets.KEYCHAIN_PASSWORD }}
-          install-certs: true
+            certificate-base64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
+            certificate-password: ${{ secrets.P12_PASSWORD }}
+            #certificate-file: ${{ secrets.CERTIFICATE_PATH }}  # Optional: Ignored if certificate-base64 is defined
+
+      - uses: nickwph/apple-provisioning-profile-action@v1   # Optional: Recommend to use with apple-provisioning-profile-action
+        with:
+          profile-base64: ${{ secrets.BUILD_PROVISION_PROFILE_BASE64 }}
+          #profile-file: ${{ secrets.CERTIFICATE_PATH }}
+
+
+#      - name: Authenticate with Apple
+#        uses: apple-actions/import-certificate@v2 # apple-actions/import-codesign-certs@v3
+#        with:
+#          p12-file-base64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
+#          p12-password: ${{ secrets.P12_PASSWORD }}
+#          keychain-name: "ios-build.keychain"
+#          keychain-password: ${{ secrets.KEYCHAIN_PASSWORD }}
+#          install-certs: true
 
 
           #      - name: Install the Apple certificate and provisioning profile
