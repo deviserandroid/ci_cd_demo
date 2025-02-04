@@ -61,9 +61,8 @@ jobs:
             pod update
 
       - name: Build iOS App
-        run: xcodebuild -project Runner.xcodeproj -scheme "Runner" -allowProvisioningUpdates -archivePath build/ios/archive/Runner.xcarchive archive
-        #run: flutter build ipa --release
-        working-directory: ./ios/
+        run: flutter build ipa --release --no-codesign
+        working-directory: ./
 
       - run: mkdir Payload
         working-directory: build/ios/archive/Runner.xcarchive/Products/Applications
