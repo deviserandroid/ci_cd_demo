@@ -76,6 +76,10 @@ jobs:
         run: zip -qq -r -9 FlutterIpaExport.ipa Payload
         working-directory: build/ios/archive/Runner.xcarchive/Products/Applications
 
+      - name: Validate IPA
+        run: codesign -vvv --deep --strict build/ios/archive/Runner.xcarchive/Products/Applications/FlutterIpaExport.ipa
+        working-directory: ./ios/
+
       - name: Upload ipa on Repository Environment
         uses: actions/upload-artifact@v4
         with:
