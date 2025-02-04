@@ -22,6 +22,15 @@ jobs:
       - name: Basic Setup via Composite
         uses: ./.github/action_basic_setup
 
+      - name: Set Up CocoaPods
+        run: |
+          sudo xcode-select -s /Applications/Xcode.app/Contents/Developer          
+          cd ios 
+            if [ -f "Podfile" ]; then echo "Podfile exists."; else pod init; fi
+            pod deintegrate
+            pod install
+            pod update
+
       - name: Authenticate with Apple
         uses: apple-actions/import-codesign-certs@v3
         with:
@@ -62,16 +71,13 @@ jobs:
 #            mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
 #            cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
 
-      - name: Set Up CocoaPods
-        run: |
-            cd ios 
-            if [ -f "Podfile" ]; then echo "Podfile exists."; else pod init; fi
-            pod deintegrate
-            pod install
-            pod update
-
       - name: Build iOS App
-        run: flutter build ipa --release
+        run: xcodebuild -exportArchive \
+          -archivePath build/ios/archive/Runner.xcarchive \
+          -exportPath build/ios/ipa \
+          -exportOptionsPlist ExportOptions.plist \
+          -allowProvisioningUpdates
+        #run: flutter build ipa --release
         working-directory: ./
 
       - run: mkdir Payload
