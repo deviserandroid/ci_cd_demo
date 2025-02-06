@@ -28,5 +28,6 @@ jobs:
           # The Slack API method to call.
           method: "conversations.open" # optional
           # Attributes that create the content of the request using JSON or YAML.
-          payload-file-path: ./.github/slack_payload.json # optional
+          payload-delimiter: ","
+          payload-file-path: "./.github/slack_payload.text" # optional
           token: ${{ secrets.SLACK_BOT_TOKEN }} # optional
