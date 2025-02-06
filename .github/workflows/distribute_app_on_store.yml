@@ -122,7 +122,7 @@ jobs:
     # Job 4 (Depends upon Job 3)
 
   distribute-ipa:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     needs: build-ios
     steps:
       - name: Checkout Code
@@ -140,8 +140,8 @@ jobs:
       # AppStore Distribution
       - name: Publish iOS Application to Appstore
         # You may pin to the exact commit or the version.
-        uses: UmutSERIFLER/publish-ios-appstore@c0c2e859225ed6f0c9ebb206b2657eea8a5f7c9a
-        #uses: UmutSERIFLER/publish-ios-appstore@1.0.1
+        # uses: UmutSERIFLER/publish-ios-appstore@c0c2e859225ed6f0c9ebb206b2657eea8a5f7c9a
+        uses: UmutSERIFLER/publish-ios-appstore@1.0.1
         with:
           # Project name is an input that will be used for action
           projectName: CI CD Demo
