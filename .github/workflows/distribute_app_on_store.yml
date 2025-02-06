@@ -13,11 +13,18 @@ jobs:
 
   distribute-ipa:
     runs-on: macos-latest
+    needs: build-ios
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
 
       - name: List files in the repository before
-        run: ls
-        working-directory: ios
+        run: ls -la
+
+      - run: cd ios
+
+      - name: List files in the repository after
+        run: ls -la
 
       # AppStore Distribution
       - name: Publish iOS Application to Appstore
