@@ -31,5 +31,5 @@ jobs:
           # payload-file-path: ".github/slack_payload.json" # optional
           token: ${{ secrets.SLACK_BOT_TOKEN }} # optional
           payload: |
-            channel: "D07A7U09DFD"
+            channel: "C07APA3KV8W"
             text: "Break"
