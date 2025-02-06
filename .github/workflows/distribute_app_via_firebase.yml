@@ -106,7 +106,6 @@ jobs:
       - name: Export Archive
         run: xcodebuild -exportArchive -archivePath build/ios/archive/Runner.xcarchive -exportPath build/ios/ipa -exportOptionsPlist ios/ExportOptions.plist -allowProvisioningUpdates
 #        run: flutter build ipa --release
-        working-directory: ./ios
 
       - run: mkdir Payload
         working-directory: build/ios/archive/Runner.xcarchive/Products/Applications
