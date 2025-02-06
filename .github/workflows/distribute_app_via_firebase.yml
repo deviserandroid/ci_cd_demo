@@ -99,8 +99,9 @@ jobs:
         run: flutter build ios
 
       - name: Build Archive
-        run: xcodebuild archive -scheme "Runner" -sdk iphoneos -destination generic/platform=iOS -archivePath build/ios/archive/Runner.xcarchive -allowProvisioningUpdates
-        working-directory: ./ios
+        run: flutter build ipa --release
+ #       run: xcodebuild archive -scheme "Runner" -sdk iphoneos -destination generic/platform=iOS -archivePath build/ios/archive/Runner.xcarchive -allowProvisioningUpdates
+#        working-directory: ./ios
 
       - name: Export Archive
         run: xcodebuild -exportArchive -archivePath build/ios/archive/Runner.xcarchive -exportPath build/ios/ipa -exportOptionsPlist ios/ExportOptions.plist -allowProvisioningUpdates
