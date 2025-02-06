@@ -91,17 +91,17 @@ jobs:
 #            mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
 #            cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
 
-#      - name: Build Archive
-#        run: xcodebuild archive -scheme "Runner" -sdk iphoneos -destination generic/platform=iOS -archivePath build/ios/archive/Runner.xcarchive -allowProvisioningUpdates
-#        working-directory: ./ios
-
       - name: Build iOS
-        run: flutter build ios
+        run: xcodebuild build -scheme "Runner" -sdk iphoneos -destination generic/platform=iOS -allowProvisioningUpdates
+        working-directory: ./ios
+
+#      - name: Build iOS
+#        run: flutter build ios
 
       - name: Build Archive
-        run: flutter build ipa --release
- #       run: xcodebuild archive -scheme "Runner" -sdk iphoneos -destination generic/platform=iOS -archivePath build/ios/archive/Runner.xcarchive -allowProvisioningUpdates
-#        working-directory: ./ios
+#        run: flutter build ipa --release
+        run: xcodebuild archive -scheme "Runner" -sdk iphoneos -destination generic/platform=iOS -archivePath build/ios/archive/Runner.xcarchive -allowProvisioningUpdates
+        working-directory: ./ios
 
       - name: Export Archive
         run: xcodebuild -exportArchive -archivePath build/ios/archive/Runner.xcarchive -exportPath build/ios/ipa -exportOptionsPlist ios/ExportOptions.plist -allowProvisioningUpdates
