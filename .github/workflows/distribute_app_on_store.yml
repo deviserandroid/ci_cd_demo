@@ -16,12 +16,12 @@ jobs:
     steps:
 
       - name: List files in the repository before
-        run: ls -la
+        run: ls
 
       - run: cd ios
 
       - name: List files in the repository after
-        run: ls -la
+        run: ls
 
       # AppStore Distribution
       - name: Publish iOS Application to Appstore
