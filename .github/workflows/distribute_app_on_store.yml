@@ -162,7 +162,7 @@ jobs:
           # Team ID for app group
           teamID: ${{ secrets.IOS_TEAM_ID }}
           # Mobile Provision Name
-          mobileProvision: ${{ $secrets.PROVISION_PROFILE }}
+          mobileProvision: ${{ secrets.PROVISION_PROFILE }}
 
   notify-team:
     runs-on: macos-latest
