@@ -172,9 +172,9 @@ jobs:
 
   notify-team:
     runs-on: macos-latest
-#    needs:
-#      - distribute
-#      - distribute-ipa
+    needs:
+      - distribute
+      - distribute-ipa
     steps:
       - name: Send to Slack
         # You may pin to the exact commit or the version.
