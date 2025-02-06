@@ -138,7 +138,7 @@ jobs:
       - name: Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
-          appId: "1:296310144448:ios:d49519a2e3b5b43c9d5c25"
+          appId: "1:296310144448:ios:824ada3de2e7f3679d5c25"
 
           # Content of service credentials file
           # Important: Repository `secrets` can only be accessed in the main workflow file
