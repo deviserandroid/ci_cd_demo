@@ -144,7 +144,7 @@ jobs:
         uses: UmutSERIFLER/publish-ios-appstore@1.0.1
         with:
           # Project name is an input that will be used for action
-          projectName: "Runner"
+          projectName: "./ios/Runner"
           # Encrypted certificate Base64
           certificateBase64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
           # Password is used for p12
