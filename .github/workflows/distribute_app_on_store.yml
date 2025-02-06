@@ -128,6 +128,15 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
 
+      - name: Download ipa artifact
+        uses: actions/download-artifact@v4.1.8
+        with:
+          name: "ci_cd_demo.ipa"
+          path: ".github/artifacts/"
+
+      - name: List Download Artifacts
+        run: ls -la .github/artifacts/
+
 
 
   notify-team:
