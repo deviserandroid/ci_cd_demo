@@ -137,6 +137,33 @@ jobs:
       - name: List Download Artifacts
         run: ls -la .github/artifacts/
 
+      # AppStore Distribution
+      - name: Publish iOS Application to Appstore
+        # You may pin to the exact commit or the version.
+        uses: UmutSERIFLER/publish-ios-appstore@c0c2e859225ed6f0c9ebb206b2657eea8a5f7c9a
+        #uses: UmutSERIFLER/publish-ios-appstore@1.0.1
+        with:
+          # Project name is an input that will be used for action
+          projectName: CI CD Demo
+          # Encrypted certificate Base64
+          certificateBase64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
+          # Password is used for p12
+          p12FilePassword: ${{ secrets.P12_PASSWORD }}
+          # Provision Profile is encrypted Base64
+          provisionProfileBase64: ${{ secrets.BUILD_PROVISION_PROFILE_BASE64 }}
+          # Keychain Password to save p12 file
+          keychainPassword: ${{ secrets.KEYCHAIN_PASSWORD }}
+          # AppStore API Key to upload app
+          appstoreAPIKey: ${{ secrets.APP_STORE_API_KEY }}
+          # AppStore API Key ID to upload app
+          appstoreAPIKeyID: ${{ secrets.APP_STORE_API_KEY_ID }}
+          # AppStore API Key Issuer to upload app
+          appstoreAPIIssuer: ${{ secrets.APP_STORE_ISSUER_ID }}
+          # Team ID for app group
+          teamID: ${{ secrets.IOS_TEAM_ID }}
+          # Mobile Provision Name
+          mobileProvision: ${{ $secrets.PROVISION_PROFILE }}
+
   notify-team:
     runs-on: macos-latest
     needs:
