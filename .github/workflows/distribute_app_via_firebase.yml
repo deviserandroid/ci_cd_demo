@@ -92,7 +92,7 @@ jobs:
 #            cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
 
       - name: Build iOS
-        run: xcodebuild build -scheme "Runner" -sdk iphoneos -destination generic/platform=iOS -allowProvisioningUpdates
+        run: xcodebuild build -scheme "Runner" -sdk iphoneos -destination generic/platform=iOS
         working-directory: ./ios
 
 #      - name: Build iOS
