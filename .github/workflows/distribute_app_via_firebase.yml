@@ -165,6 +165,6 @@ jobs:
           # Distribution groups
           groups: "codknox-testers" # optional
           # Distribution testers
-          releaseNotes: "Test the core features of the app v(1.0.${{ github.run_number }})" # optional
+          releaseNotes: "Test the core features of the iOS app v(1.0.${{ github.run_number }})" # optional
           # Flag that can included to print verbose log output.
           debug: true
