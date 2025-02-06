@@ -22,6 +22,13 @@ jobs:
       - name: Basic Setup via Composite
         uses: ./.github/action_basic_setup
 
+      - name: Unlock Keychain
+        run: |
+          security unlock-keychain -p ${{ secrets.KEYCHAIN_PASSWORD }} ~/Library/Keychains/login.keychain-db
+
+      - name: Clean Flutter project
+        run: flutter clean
+
       - name: Set Up CocoaPods
         run: |
           sudo xcode-select -s /Applications/Xcode.app/Contents/Developer          
@@ -84,20 +91,12 @@ jobs:
 #            mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
 #            cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
 
-#      - name: Build iOS
-#        run: flutter build ios
-
-
 #      - name: Build Archive
 #        run: xcodebuild archive -scheme "Runner" -sdk iphoneos -destination generic/platform=iOS -archivePath build/ios/archive/Runner.xcarchive -allowProvisioningUpdates
 #        working-directory: ./ios
 
-      - name: Unlock Keychain
-        run: |
-          security unlock-keychain -p ${{ secrets.KEYCHAIN_PASSWORD }} ~/Library/Keychains/login.keychain-db
-
-      - name: Clean Flutter project
-        run: flutter clean
+      - name: Build iOS
+        run: flutter build ios
 
       - name: Build Archive
         run: xcodebuild archive -scheme "Runner" -sdk iphoneos -destination generic/platform=iOS -archivePath build/ios/archive/Runner.xcarchive -allowProvisioningUpdates
