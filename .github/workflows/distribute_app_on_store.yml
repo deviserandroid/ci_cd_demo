@@ -116,7 +116,7 @@ jobs:
 
   distribute-ipa:
     runs-on: macos-latest
-    #needs: build-ios
+    needs: build-ios
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
