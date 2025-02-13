@@ -119,9 +119,9 @@ jobs:
           PRIVATE_KEY: ${{ secrets.APP_STORE_PRIVATE_KEY }}
         working-directory: build/ios/archive/Runner.xcarchive/Products/Applications
         run: |
-            echo "$PRIVATE_KEY" > AuthKey.p8
+            echo "$PRIVATE_KEY" | base64 --decode > ~/private_keys/AuthKey.p8
             xcrun altool --upload-app -t ios -f FlutterIpaExport.ipa \
-              --apiKey $KEY_ID --apiIssuer $ISSUER_ID
+              --apiKey $KEY_ID --apiIssuer $ISSUER_ID --privateKey ~/private_keys/AuthKey.p8
 
 #      - name: Build iOS
 #        run: flutter build ios
