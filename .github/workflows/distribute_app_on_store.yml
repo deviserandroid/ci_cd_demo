@@ -89,24 +89,54 @@ jobs:
         with:
           profile-base64: ${{ secrets.BUILD_PROVISION_PROFILE_BASE64 }}
 
-      - name: Build iOS
-        run: flutter build ios
+      - name: Build and Archive
+        working-directory: ios
+        run: |
+          xcodebuild clean archive \
+          -workspace "Runner.xcworkspace" \
+          -scheme "Runner" \
+          -configuration Release \
+          -archivePath build/Runner.xcarchive \
+           CODE_SIGN_STYLE=Manual \
+           DEVELOPMENT_TEAM=${{ secrets.IOS_TEAM_ID }} \
+           PROVISIONING_PROFILE_SPECIFIER=${{ secrets.PROVISION_PROFILE }}
 
-      - name: Export Archive
-        run: flutter build ipa --release
-        working-directory: ./
+          - name: Export IPA
+            run: |
+              xcodebuild -exportArchive \
+                -archivePath build/Runner.xcarchive \
+                -exportPath build \
+                -exportOptionsPlist ExportOptions.plist \
+                -allowProvisioningUpdates
 
-      - run: mkdir Payload
-        working-directory: build/ios/archive/Runner.xcarchive/Products/Applications
+          - name: Upload to App Store
+              env:
+                ISSUER_ID: ${{ secrets.APP_STORE_ISSUER_ID }}
+                KEY_ID: ${{ secrets.APP_STORE_API_KEY_ID }}
+                PRIVATE_KEY: ${{ secrets.APP_STORE_PRIVATE_KEY }}
+              run: |
+                echo "$PRIVATE_KEY" > AuthKey.p8
+                xcrun altool --upload-app -t ios -f build/Runner.ipa \
+                  --apiKey $KEY_ID --apiIssuer $ISSUER_ID
 
-      - run: mv Runner.app/ Payload
-        working-directory: build/ios/archive/Runner.xcarchive/Products/Applications
+#      - name: Build iOS
+#        run: flutter build ios
 
-      - run: ls -R build/ios/archive/Runner.xcarchive/Products/Applications/Payload
+#      - name: Export Archive
+#        run: flutter build ipa --release
+#        working-directory: ./
 
-      - name: Zip output
-        run: zip -qq -r -9 FlutterIpaExport.ipa Payload
-        working-directory: build/ios/archive/Runner.xcarchive/Products/Applications
+#      - run: mkdir Payload
+#        working-directory: build/ios/archive/Runner.xcarchive/Products/Applications
+
+#      - run: mv Runner.app/ Payload
+#        working-directory: build/ios/archive/Runner.xcarchive/Products/Applications
+
+#      - run: ls -R build/ios/archive/Runner.xcarchive/Products/Applications/Payload
+
+#      - name: Zip output
+#        run: zip -qq -r -9 FlutterIpaExport.ipa Payload
+#        working-directory: build/ios/archive/Runner.xcarchive/Products/Applications
 
       #      - name: Validate IPA
       #        run: codesign -vvv --deep --strict FlutterIpaExport.ipa
@@ -114,52 +144,12 @@ jobs:
 
   # Job 4 (Depends upon Job 3)
 
-  distribute-ipa:
-    runs-on: macos-latest
-    needs: build-ios
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
-
-      - name: List files in the repository before
-        run: ls
-
-      - run: cd ios
-
-      - name: List files in the repository after
-        run: ls
-
-      # AppStore Distribution
-      - name: Publish iOS Application to Appstore
-        # You may pin to the exact commit or the version.
-        # uses: UmutSERIFLER/publish-ios-appstore@c0c2e859225ed6f0c9ebb206b2657eea8a5f7c9a
-        uses: UmutSERIFLER/publish-ios-appstore@1.0.1
-        with:
-          # Project name is an input that will be used for action
-          projectName: "Runner"
-          # Encrypted certificate Base64
-          certificateBase64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
-          # Password is used for p12
-          p12FilePassword: ${{ secrets.P12_PASSWORD }}
-          # Provision Profile is encrypted Base64
-          provisionProfileBase64: ${{ secrets.BUILD_PROVISION_PROFILE_BASE64 }}
-          # Keychain Password to save p12 file
-          keychainPassword: ${{ secrets.KEYCHAIN_PASSWORD }}
-          # AppStore API Key to upload app
-          appstoreAPIKey: ${{ secrets.APP_STORE_API_KEY }}
-          # AppStore API Key ID to upload app
-          appstoreAPIKeyID: ${{ secrets.APP_STORE_API_KEY_ID }}
-          # AppStore API Key Issuer to upload app
-          appstoreAPIIssuer: ${{ secrets.APP_STORE_ISSUER_ID }}
-          # Team ID for app group
-          teamID: ${{ secrets.IOS_TEAM_ID }}
-          # Mobile Provision Name
-          mobileProvision: ${{ secrets.PROVISION_PROFILE }}
 
   notify-team:
     runs-on: macos-latest
     needs:
-      - distribute-ipa
+      - build-ios
+      #- distribute-ipa
     steps:
       - name: Send to Slack
         # You may pin to the exact commit or the version.
