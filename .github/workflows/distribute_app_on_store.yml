@@ -122,27 +122,8 @@ jobs:
             mkdir -p ~/private_keys
             echo "$PRIVATE_KEY" | base64 --decode > ~/private_keys/AuthKey_WSN2L2RV96.p8
             chmod 600 ~/private_keys/AuthKey_WSN2L2RV96.p8
-            xcrun altool --upload-app -t ios -f FlutterIpaExport.ipa \
+            xcrun altool --upload-app --type ios --file FlutterIpaExport.ipa \
               --apiKey $KEY_ID --apiIssuer $ISSUER_ID --privateKey ~/private_keys/AuthKey_WSN2L2RV96.p8
-
-#      - name: Build iOS
-#        run: flutter build ios
-
-#      - name: Export Archive
-#        run: flutter build ipa --release
-#        working-directory: ./
-
-#      - run: mkdir Payload
-#        working-directory: build/ios/archive/Runner.xcarchive/Products/Applications
-
-#      - run: mv Runner.app/ Payload
-#        working-directory: build/ios/archive/Runner.xcarchive/Products/Applications
-
-#      - run: ls -R build/ios/archive/Runner.xcarchive/Products/Applications/Payload
-
-#      - name: Zip output
-#        run: zip -qq -r -9 FlutterIpaExport.ipa Payload
-#        working-directory: build/ios/archive/Runner.xcarchive/Products/Applications
 
       #      - name: Validate IPA
       #        run: codesign -vvv --deep --strict FlutterIpaExport.ipa
