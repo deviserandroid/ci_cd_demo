@@ -101,23 +101,25 @@ jobs:
            DEVELOPMENT_TEAM=${{ secrets.IOS_TEAM_ID }} \
            PROVISIONING_PROFILE_SPECIFIER=${{ secrets.PROVISION_PROFILE }}
 
-          - name: Export IPA
-            run: |
-              xcodebuild -exportArchive \
-                -archivePath build/Runner.xcarchive \
-                -exportPath build \
-                -exportOptionsPlist ExportOptions.plist \
-                -allowProvisioningUpdates
+      - name: Export IPA
+        working-directory: ios
+        run: |
+            xcodebuild -exportArchive \
+              -archivePath build/Runner.xcarchive \
+              -exportPath build \
+              -exportOptionsPlist ExportOptions.plist \
+              -allowProvisioningUpdates
 
-          - name: Upload to App Store
-              env:
-                ISSUER_ID: ${{ secrets.APP_STORE_ISSUER_ID }}
-                KEY_ID: ${{ secrets.APP_STORE_API_KEY_ID }}
-                PRIVATE_KEY: ${{ secrets.APP_STORE_PRIVATE_KEY }}
-              run: |
-                echo "$PRIVATE_KEY" > AuthKey.p8
-                xcrun altool --upload-app -t ios -f build/Runner.ipa \
-                  --apiKey $KEY_ID --apiIssuer $ISSUER_ID
+      - name: Upload to App Store
+        env:
+          ISSUER_ID: ${{ secrets.APP_STORE_ISSUER_ID }}
+          KEY_ID: ${{ secrets.APP_STORE_API_KEY_ID }}
+          PRIVATE_KEY: ${{ secrets.APP_STORE_PRIVATE_KEY }}
+        working-directory: ios
+        run: |
+            echo "$PRIVATE_KEY" > AuthKey.p8
+            xcrun altool --upload-app -t ios -f build/Runner.ipa \
+              --apiKey $KEY_ID --apiIssuer $ISSUER_ID
 
 #      - name: Build iOS
 #        run: flutter build ios
