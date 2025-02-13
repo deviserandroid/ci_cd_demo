@@ -70,6 +70,10 @@ jobs:
       - name: Basic Setup via Composite
         uses: ./.github/action_basic_setup
 
+      - name: Fetch plugins Flutter Project
+        run: flutter pub get
+        shell: bash
+
       - name: Set Up CocoaPods
         run: |
           sudo xcode-select -s /Applications/Xcode.app/Contents/Developer          
