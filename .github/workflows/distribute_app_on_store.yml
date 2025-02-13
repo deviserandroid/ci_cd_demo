@@ -74,32 +74,6 @@ jobs:
         run: flutter pub get
         shell: bash
 
-      - name: Set Up Keychain
-        run: |
-          KEYCHAIN_NAME=build.keychain
-          security create-keychain -p "" $KEYCHAIN_NAME
-          security default-keychain -s $KEYCHAIN_NAME
-          security unlock-keychain -p "" $KEYCHAIN_NAME
-
-      - name: Import Developer Certificate
-        env:
-          CERTIFICATE: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
-          CERT_PASSWORD: ${{ secrets.P12_PASSWORD }}
-        run: |
-          echo "$CERTIFICATE" | base64 --decode > certificate.p12
-          security import certificate.p12 -P "$CERT_PASSWORD" -A -t cert -f pkcs12
-          security set-key-partition-list -S apple-tool:,apple: -s -k "" ~/Library/Keychains/build.keychain
-
-      - name: Install Provisioning Profile
-        env:
-          PROVISIONING_PROFILE: ${{ secrets.PROVISIONING_PROFILE }}
-        run: |
-          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-          echo "$PROVISIONING_PROFILE" | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/profile.mobileprovision
-
-      - name: Select Xcode Version
-        run: sudo xcode-select -s /Applications/Xcode.app
-
       - name: Set Up CocoaPods
         run: |
           sudo xcode-select -s /Applications/Xcode.app/Contents/Developer          
@@ -119,36 +93,34 @@ jobs:
         with:
           profile-base64: ${{ secrets.BUILD_PROVISION_PROFILE_BASE64 }}
 
-      - name: Build and Archive
-        working-directory: ios
-        run: |
-          xcodebuild clean archive \
-          -workspace "Runner.xcworkspace" \
-          -scheme "Runner" \
-          -configuration Release \
-          -archivePath build/Runner.xcarchive \
-           CODE_SIGN_STYLE=Manual \
-           DEVELOPMENT_TEAM=${{ secrets.IOS_TEAM_ID }} \
-           PROVISIONING_PROFILE_SPECIFIER=${{ secrets.PROVISION_PROFILE }}
+      - name: Build iOS
+        run: flutter build ios
 
-      - name: Export IPA
-        working-directory: ios
-        run: |
-            xcodebuild -exportArchive \
-              -archivePath build/Runner.xcarchive \
-              -exportPath build \
-              -exportOptionsPlist ExportOptions.plist \
-              -allowProvisioningUpdates
+      - name: Export Archive
+        run: flutter build ipa --release
+        working-directory: ./
+
+      - run: mkdir Payload
+        working-directory: build/ios/archive/Runner.xcarchive/Products/Applications
+
+      - run: mv Runner.app/ Payload
+        working-directory: build/ios/archive/Runner.xcarchive/Products/Applications
+
+      - run: ls -R build/ios/archive/Runner.xcarchive/Products/Applications/Payload
+
+      - name: Zip output
+        run: zip -qq -r -9 FlutterIpaExport.ipa Payload
+        working-directory: build/ios/archive/Runner.xcarchive/Products/Applications
 
       - name: Upload to App Store
         env:
           ISSUER_ID: ${{ secrets.APP_STORE_ISSUER_ID }}
           KEY_ID: ${{ secrets.APP_STORE_API_KEY_ID }}
           PRIVATE_KEY: ${{ secrets.APP_STORE_PRIVATE_KEY }}
-        working-directory: ios
+        working-directory: build/ios/archive/Runner.xcarchive/Products/Applications
         run: |
             echo "$PRIVATE_KEY" > AuthKey.p8
-            xcrun altool --upload-app -t ios -f build/Runner.ipa \
+            xcrun altool --upload-app -t ios -f FlutterIpaExport.ipa \
               --apiKey $KEY_ID --apiIssuer $ISSUER_ID
 
 #      - name: Build iOS
