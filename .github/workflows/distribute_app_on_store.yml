@@ -125,7 +125,7 @@ jobs:
             echo "LOGS: KEY_ID: $KEY_ID"
             echo "LOGS: PRIVATE_KEY: $PRIVATE_KEY"
             chmod 600 ~/private_keys/AuthKey_WSN2L2RV96.p8
-            xcrun altool --upload-package --type ios --file FlutterIpaExport.ipa \
+            xcrun altool --upload-package -t ios -f FlutterIpaExport.ipa \
               --apiKey $KEY_ID --apiIssuer $ISSUER_ID --privateKey ~/private_keys/AuthKey_WSN2L2RV96.p8
     
           
