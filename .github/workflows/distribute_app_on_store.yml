@@ -87,7 +87,7 @@ jobs:
           CERT_PASSWORD: ${{ secrets.P12_PASSWORD }}
         run: |
           echo "$CERTIFICATE" | base64 --decode > certificate.p12
-          security import certificate.p12 -P "P12_PASSWORD" -A -t cert -f pkcs12
+          security import certificate.p12 -P "$CERT_PASSWORD" -A -t cert -f pkcs12
           security set-key-partition-list -S apple-tool:,apple: -s -k "" ~/Library/Keychains/build.keychain
 
       - name: Install Provisioning Profile
