@@ -126,8 +126,8 @@ jobs:
               --type ios \
               --apple-id "6741995047" \
               --bundle-id "com.codknox.cicddemo" \
-              --bundle-version "1" \
-              --bundle-short-version-string "1.0" \
+              --bundle-version "2" \
+              --bundle-short-version-string "1.0.0" \
               --apiKey $KEY_ID --apiIssuer $ISSUER_ID --privateKey ~/private_keys/AuthKey_WSN2L2RV96.p8
     
           
