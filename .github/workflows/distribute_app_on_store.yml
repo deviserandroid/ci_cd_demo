@@ -107,11 +107,11 @@ jobs:
           # E.g.: IOS_APP_DEVELOPMENT, IOS_APP_STORE etc.
           signType: IOS_APP_STORE
 
-      - name: Build iOS
-        run: flutter build ios --no-codesign
+#      - name: Build iOS
+#        run: flutter build ios --no-codesign
 
       - name: Export Archive
-        run: flutter build ipa --export-options-plist=ios/ExportOptions.plist --no-codesign
+        run: flutter build ipa --export-options-plist=ios/ExportOptions.plist
         working-directory: ./
 
       - run: mkdir Payload
