@@ -66,9 +66,11 @@ jobs:
 
       - name: Build iOS
         run: xcodebuild archive -project ios/Runner.xcodeproj -scheme Runner -configuration Release -sdk iphoneos -archivePath build/Runner.xcarchive
+        working-directory: ios
 
       - name: Export Archive
         run: xcodebuild -exportArchive -archivePath build/Runner.xcarchive -exportPath build/Runner -exportOptionsPlist ios/ExportOptions.plist
+        working-directory: ios
 
       - run: mkdir Payload
         working-directory: build/ios/archive/Runner.xcarchive/Products/Applications
