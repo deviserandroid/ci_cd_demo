@@ -31,12 +31,33 @@ jobs:
         with:
           profile-base64: ${{ secrets.BUILD_PROVISION_PROFILE_BASE64 }}
 
-      - name: Add Certificates to the Keychain
-        run: keychain add-certificates
-
       - name: Update XCode to use signing profile
         run: xcode-project use-profiles
 
       - name: Fetch plugins Flutter Project
         run: flutter pub get
         shell: bash
+
+      - name: Build iOS
+        run: flutter build ios
+
+      - name: Export Archive
+        run: flutter build ipa --release
+        working-directory: ./
+
+      - run: mkdir Payload
+        working-directory: build/ios/archive/Runner.xcarchive/Products/Applications
+
+      - run: mv Runner.app/ Payload
+        working-directory: build/ios/archive/Runner.xcarchive/Products/Applications
+
+      - run: ls -R build/ios/archive/Runner.xcarchive/Products/Applications/Payload
+
+      - name: Zip output
+        run: zip -qq -r -9 FlutterIpaExport.ipa Payload
+        working-directory: build/ios/archive/Runner.xcarchive/Products/Applications
+
+      - name: Validate IPA
+        run: codesign -vvv --deep --strict FlutterIpaExport.ipa
+        working-directory: build/ios/archive/Runner.xcarchive/Products/Applications
+
