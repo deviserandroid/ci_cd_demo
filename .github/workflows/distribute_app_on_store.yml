@@ -21,7 +21,6 @@ jobs:
       - name: Basic Setup via Composite
         uses: ./.github/action_basic_setup
 
-
       - name: Install the Apple certificate and provisioning profile
         env:
           BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
@@ -52,24 +51,18 @@ jobs:
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
 
-
-
-      - name: Install Profile
-        uses: nickwph/apple-build-certificate-action@v1
-        with:
-          certificate-base64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
-          certificate-password: ${{ secrets.P12_PASSWORD }}
-
-      - uses: nickwph/apple-provisioning-profile-action@v1   # Optional: Recommend to use with apple-provisioning-profile-action
-        with:
-          profile-base64: ${{ secrets.BUILD_PROVISION_PROFILE_BASE64 }}
-
-      - name: Update XCode to use signing profile
-        run: xcode-project use-profiles
-
       - name: Fetch plugins Flutter Project
         run: flutter pub get
         shell: bash
+
+      - name: Set Up CocoaPods
+        run: |
+          sudo xcode-select -s /Applications/Xcode.app/Contents/Developer          
+          cd ios 
+            if [ -f "Podfile" ]; then echo "Podfile exists."; else pod init; fi
+            pod deintegrate
+            pod install
+            pod update
 
       - name: Build iOS
         run: flutter build ios
