@@ -65,11 +65,10 @@ jobs:
             pod update
 
       - name: Build iOS
-        run: flutter build ios
+        run: xcodebuild archive -project ios/Runner.xcodeproj -scheme Runner -configuration Release -sdk iphoneos -archivePath build/Runner.xcarchive
 
       - name: Export Archive
-        run: flutter build ipa --release
-        working-directory: ./
+        run: xcodebuild -exportArchive -archivePath build/Runner.xcarchive -exportPath build/Runner -exportOptionsPlist ios/ExportOptions.plist
 
       - run: mkdir Payload
         working-directory: build/ios/archive/Runner.xcarchive/Products/Applications
