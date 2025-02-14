@@ -20,9 +20,12 @@ jobs:
 
       - name: Basic Setup via Composite
         uses: ./.github/action_basic_setup
-
-      - name: Initialize Keychain
-        run: keychain initialize
+      - name: Set Up Keychain
+        run: |
+          KEYCHAIN_NAME=build.keychain
+          security create-keychain -p "" $KEYCHAIN_NAME
+          security default-keychain -s $KEYCHAIN_NAME
+          security unlock-keychain -p "" $KEYCHAIN_NAME
 
       - name: Create a directory for certificate key
         run: mkdir certificates
