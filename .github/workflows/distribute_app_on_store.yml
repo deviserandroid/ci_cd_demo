@@ -95,7 +95,7 @@ jobs:
           # Issuer identifier
           issuerID: ${{ secrets.APP_STORE_ISSUER_ID }}
           # Id of the newly created temporary kechain
-          # keychainName: # default is signing.ios
+          keychainName: signing.ios # default is signing.ios
           # Password of the newly created temporary kechain
           keychainPassword: ${{ secrets.KEYCHAIN_PASSWORD }}
           # Base64 encoded .p12 signing cert with private key
