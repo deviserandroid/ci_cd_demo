@@ -121,7 +121,7 @@ jobs:
         run: |
             mkdir ~/private_keys
             echo "$PRIVATE_KEY" | base64 --decode > ~/private_keys/AuthKey_WSN2L2RV96.p8 \
-            chmod 600 ~/private_keys/AuthKey_WSN2L2RV96.p8
+#            chmod 600 ~/private_keys/AuthKey_WSN2L2RV96.p8
             xcrun altool --upload-package FlutterIpaExport.ipa \
               --type ios \
               --apple-id "6741995047" \
