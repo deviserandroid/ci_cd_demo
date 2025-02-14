@@ -97,7 +97,7 @@ jobs:
         run: flutter build ios
 
       - name: Export Archive
-        run: flutter build ipa --export-options-plist=ExportOptions.plist --no-codesign
+        run: flutter build ipa --export-options-plist=ios/ExportOptions.plist --no-codesign
         working-directory: ./
 
       - run: mkdir Payload
