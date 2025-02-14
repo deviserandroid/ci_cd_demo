@@ -20,24 +20,16 @@ jobs:
 
       - name: Basic Setup via Composite
         uses: ./.github/action_basic_setup
-      - name: Set Up Keychain
-        run: |
-          KEYCHAIN_NAME=build.keychain
-          security create-keychain -p "" $KEYCHAIN_NAME
-          security default-keychain -s $KEYCHAIN_NAME
-          security unlock-keychain -p "" $KEYCHAIN_NAME
 
-      - name: Create a directory for certificate key
-        run: mkdir certificates
-        working-directory: ios
+      - name: Install Profile
+        uses: nickwph/apple-build-certificate-action@v1
+        with:
+          certificate-base64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
+          certificate-password: ${{ secrets.P12_PASSWORD }}
 
-      - name: Fetch Signing Profile
-        working-directory: ios
-        run: app-store-connect fetch-signing-files com.codknox.cicddemo \
-          --platform IOS \
-          --type IOS_APP_STORE \
-          --certificate-key= /certificates \
-          --create
+      - uses: nickwph/apple-provisioning-profile-action@v1   # Optional: Recommend to use with apple-provisioning-profile-action
+        with:
+          profile-base64: ${{ secrets.BUILD_PROVISION_PROFILE_BASE64 }}
 
       - name: Add Certificates to the Keychain
         run: keychain add-certificates
