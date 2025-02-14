@@ -94,10 +94,10 @@ jobs:
           profile-base64: ${{ secrets.BUILD_PROVISION_PROFILE_BASE64 }}
 
       - name: Build iOS
-        run: flutter build ios
+        run: flutter build ios --export-options-plist=ios/ExportOptions.plist
 
       - name: Export Archive
-        run: flutter build ipa --export-options-plist=ios/ExportOptions.plist --no-codesign
+        run: flutter build ipa --export-options-plist=ios/ExportOptions.plist
         working-directory: ./
 
       - run: mkdir Payload
