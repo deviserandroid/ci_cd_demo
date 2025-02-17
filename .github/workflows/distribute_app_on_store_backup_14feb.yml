@@ -3,11 +3,11 @@ name: Build App and Distribute it on PlayStore and AppStore
 on:
   pull_request:
     branches:
-      - release/beta2
+      - release/beta
 
   push:
     branches:
-      - release/beta2
+      - release/beta
 
 jobs:
   build-android:
@@ -83,21 +83,35 @@ jobs:
             pod install
             pod update
 
-      - name: Install Profile
-        uses: nickwph/apple-build-certificate-action@v1
+      - name: Prepare signing
+        # You may pin to the exact commit or the version.
+        # uses: ngeri/prepare-signing@5bec954468cce224f0d7f589dbe42596dbaf48f0
+        uses: ngeri/prepare-signing@v1.0.2
         with:
-          certificate-base64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
-          certificate-password: ${{ secrets.P12_PASSWORD }}
+          # App Store Connect private key with proper rights
+          appStoreConnectPrivateKey: ${{ secrets.APP_STORE_API_KEY }}
+          # Identifier of the private key
+          keyID: ${{ secrets.APP_STORE_API_KEY_ID }}
+          # Issuer identifier
+          issuerID: ${{ secrets.APP_STORE_ISSUER_ID }}
+          # Id of the newly created temporary kechain
+          keychainName: signing.ios # default is signing.ios
+          # Password of the newly created temporary kechain
+          keychainPassword: ${{ secrets.KEYCHAIN_PASSWORD }}
+          # Base64 encoded .p12 signing cert with private key
+          base64P12File: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
+          # Password of the .p12 file
+          p12Password: ${{ secrets.P12_PASSWORD }}
+          # Bundle identifier of the application
+          bundleIdentifier: com.codknox.cicddemo
+          # E.g.: IOS_APP_DEVELOPMENT, IOS_APP_STORE etc.
+          signType: IOS_APP_STORE
 
-      - uses: nickwph/apple-provisioning-profile-action@v1   # Optional: Recommend to use with apple-provisioning-profile-action
-        with:
-          profile-base64: ${{ secrets.BUILD_PROVISION_PROFILE_BASE64 }}
-
-      - name: Build iOS
-        run: flutter build ios
+      #      - name: Build iOS
+      #        run: flutter build ios --no-codesign
 
       - name: Export Archive
-        run: flutter build ipa --release
+        run: flutter build ipa --export-options-plist=ios/ExportOptions.plist
         working-directory: ./
 
       - run: mkdir Payload
@@ -128,10 +142,10 @@ jobs:
           chmod 600 ~/private_keys/AuthKey_WSN2L2RV96.p8
           xcrun altool --upload-package FlutterIpaExport.ipa \
             --type ios \
-            --apple-id "6741995047" \
-            --bundle-id "com.codknox.cicddemo" \
-            --bundle-version "2" \
-            --bundle-short-version-string "1.0.0" \
+            --apple-id 6741995047 \
+            --bundle-id com.codknox.cicddemo \
+            --bundle-version 5 \
+            --bundle-short-version-string 1.0.0 \
             --apiKey $KEY_ID --apiIssuer $ISSUER_ID --privateKey ~/private_keys/AuthKey_WSN2L2RV96.p8
   
 
