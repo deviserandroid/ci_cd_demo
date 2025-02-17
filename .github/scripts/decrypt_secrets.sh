@@ -1,12 +1,12 @@
 #!/bin/sh
 set -eo pipefail
 
-gpg --quiet --batch --yes --decrypt --passphrase="$APPLEID_PASSPHRASE" --output ./.github/secrets/CodknoxProvisioningProfile.mobileprovision.mobileprovision ./.github/secrets/CodknoxProvisioningProfile.mobileprovision.gpg
+gpg --quiet --batch --yes --decrypt --passphrase="$APPLEID_PASSPHRASE" --output ./.github/secrets/CodknoxProvisioningProfile.mobileprovision ./.github/secrets/CodknoxProvisioningProfile.mobileprovision.gpg
 gpg --quiet --batch --yes --decrypt --passphrase="$APPLEID_PASSPHRASE" --output ./.github/secrets/ios_distribution.cer ./.github/secrets/ios_distribution.cer.gpg
 
 mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
 
-cp ./.github/secrets/CodknoxProvisioningProfile.mobileprovision.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/CodknoxProvisioningProfile.mobileprovision.mobileprovision
+cp ./.github/secrets/CodknoxProvisioningProfile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/CodknoxProvisioningProfile.mobileprovision
 
 
 security create-keychain -p "" build.keychain
