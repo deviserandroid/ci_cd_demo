@@ -3,11 +3,11 @@ name: Build App and Distribute it on PlayStore and AppStore
 on:
   pull_request:
     branches:
-      - release/beta
+      - release/beta2
 
   push:
     branches:
-      - release/beta
+      - release/beta2
 
 jobs:
   build-android:
