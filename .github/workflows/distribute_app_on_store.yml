@@ -87,7 +87,7 @@ jobs:
         run: flutter build ios --no-codesign --release
 
       - name: Export Archive
-        run: flutter build ipa --release
+        run: flutter build ipa --no-codesign --release
         working-directory: ./
 
       - run: mkdir Payload
