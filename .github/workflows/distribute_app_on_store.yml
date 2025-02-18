@@ -83,8 +83,11 @@ jobs:
             pod install
             pod update
 
+      - name: Build iOS
+        run: flutter build ios
+
       - name: Export Archive
-        run: flutter build ipa --export-options-plist=ios/ExportOptions.plist
+        run: flutter build ipa --release
         working-directory: ./
 
       - run: mkdir Payload
