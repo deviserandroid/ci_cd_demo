@@ -84,7 +84,7 @@ jobs:
             pod update
 
       - name: Build iOS
-        run: flutter build ios
+        run: flutter build ios --no-codesign --release
 
       - name: Export Archive
         run: flutter build ipa --release
