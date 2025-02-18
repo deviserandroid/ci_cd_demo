@@ -83,6 +83,39 @@ jobs:
             pod install
             pod update
 
+      - name: Prepare signing
+        # You may pin to the exact commit or the version.
+        # uses: ngeri/prepare-signing@5bec954468cce224f0d7f589dbe42596dbaf48f0
+        uses: ngeri/prepare-signing@v1.0.2
+        with:
+          # App Store Connect private key with proper rights
+          appStoreConnectPrivateKey: ${{ secrets.APP_STORE_API_KEY }}
+          # Identifier of the private key
+          keyID: ${{ secrets.APP_STORE_API_KEY_ID }}
+          # Issuer identifier
+          issuerID: ${{ secrets.APP_STORE_ISSUER_ID }}
+          # Id of the newly created temporary kechain
+          keychainName: signing.ios # default is signing.ios
+          # Password of the newly created temporary kechain
+          keychainPassword: ${{ secrets.KEYCHAIN_PASSWORD }}
+          # Base64 encoded .p12 signing cert with private key
+          base64P12File: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
+          # Password of the .p12 file
+          p12Password: ${{ secrets.P12_PASSWORD }}
+          # Bundle identifier of the application
+          bundleIdentifier: com.codknox.cicddemo
+          # E.g.: IOS_APP_DEVELOPMENT, IOS_APP_STORE etc.
+          signType: IOS_APP_STORE
+
+      - name: List Available Signing Identities
+        run: |
+          IDENTITY=$(security find-identity -v -p codesigning | grep "Apple Distribution" | awk -F '"' '{print $2}')
+          echo "IDENTITY=$IDENTITY" >> $GITHUB_ENV
+
+      - name: Verify Identity
+        run: |
+          echo "Signing Identity is: $IDENTITY"
+
       - name: Build iOS
         run: flutter build ios --no-codesign --release
 
@@ -101,15 +134,6 @@ jobs:
       - name: Zip output
         run: zip -qq -r -9 FlutterIpaExport.ipa Payload
         working-directory: build/ios/archive/Runner.xcarchive/Products/Applications
-
-      - name: List Available Signing Identities
-        run: |
-          IDENTITY=$(security find-identity -v -p codesigning | grep "Apple Distribution" | awk -F '"' '{print $2}')
-          echo "IDENTITY=$IDENTITY" >> $GITHUB_ENV
-
-      - name: Verify Identity
-        run: |
-          echo "Signing Identity is: $IDENTITY"
 
       - name: Sign IPA
         run: codesign -s $IDENTITY FlutterIpaExport.ipa
