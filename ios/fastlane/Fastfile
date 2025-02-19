@@ -13,7 +13,7 @@
 # Uncomment the line if you want fastlane to automatically update itself
 # update_fastlane
 
-#testing 3
+#testing 4
 
 default_platform(:ios)
 
