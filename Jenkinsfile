@@ -5,14 +5,12 @@ pipeline {
     stage('Setup') {
       steps {
         echo "Setup"
-        sh "export PATH=$HOME/.gem/ruby/3.1.3/bin:$HOME/.gem/ruby/2.6.0/bin:$PATH"
-        // Configure bundler to use the user's home directory
+        // Install bundler in order to use fastlane
+        sh "gem install bundler"
+        // set the local path for bundles in vendor/bundle
         sh "bundle config set --local path 'vendor/bundle'"
-        // Install bundler in the user's home directory
-        sh "gem install --user-install bundler"
-        // Ensure gems installed properly
+        // install bundles if they're not installed
         sh "bundle check || bundle install --jobs=4 --retry=3"
-      }
     }
     stage('Build') {
       steps {
