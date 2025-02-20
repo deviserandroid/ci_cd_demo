@@ -11,7 +11,7 @@ pipeline {
         // Configure bundler to use the user's home directory
         sh "bundle config set --local path 'vendor/bundle'"
         // Install bundler in the user's home directory
-        sh "gem install --user-install bundler -v 2.4.22"
+        sh "gem install --user-install bundler"
         // Ensure gems installed properly
         sh "bundle check || bundle install --jobs=4 --retry=3"
       }
