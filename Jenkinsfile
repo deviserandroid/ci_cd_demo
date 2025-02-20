@@ -11,7 +11,6 @@ pipeline {
         // Install bundler in the user's home directory
         //sh "gem install --user-install bundler"
         // Ensure gems installed properly
-        sh "gem install fastlane"
         sh "bundle check || bundle install --jobs=4 --retry=3"
       }
     }
