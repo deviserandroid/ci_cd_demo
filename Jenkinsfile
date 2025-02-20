@@ -11,6 +11,7 @@ pipeline {
         sh "bundle config set --local path 'vendor/bundle'"
         // install bundles if they're not installed
         sh "bundle check || bundle install --jobs=4 --retry=3"
+        }
     }
     stage('Build') {
       steps {
