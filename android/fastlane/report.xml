@@ -5,67 +5,67 @@
     
     
       
-      <testcase classname="fastlane.lanes" name="00: default_platform" time="0.00039">
+      <testcase classname="fastlane.lanes" name="00: default_platform" time="0.000565">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="01: Switch to android setup_variables lane" time="0.000193">
+      <testcase classname="fastlane.lanes" name="01: Switch to android setup_variables lane" time="0.000215">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="02: Switch to android update_build_number lane" time="0.000143">
+      <testcase classname="fastlane.lanes" name="02: Switch to android update_build_number lane" time="0.00019">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="03: Switch to android fetch_build_number lane" time="0.000135">
+      <testcase classname="fastlane.lanes" name="03: Switch to android fetch_build_number lane" time="0.00029">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="04: grep &apos;versionCode&apos; app/build.gradle | awk &apos;{print $2}&apos; | tr -d &apos;&quot;&apos;" time="0.011976">
+      <testcase classname="fastlane.lanes" name="04: grep &apos;versionCode&apos; app/build.gradle | awk &apos;{print $2}&apos; | tr -d &apos;&quot;&apos;" time="0.017998">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="05: echo 1 &gt; filename.txt" time="0.007681">
+      <testcase classname="fastlane.lanes" name="05: echo 1 &gt; filename.txt" time="0.011328">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="06: Switch to android build_apk lane" time="0.000214">
+      <testcase classname="fastlane.lanes" name="06: Switch to android build_apk lane" time="0.000283">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="07: Switch to android fetch_build_number lane" time="0.000144">
+      <testcase classname="fastlane.lanes" name="07: Switch to android fetch_build_number lane" time="0.000122">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="08: grep &apos;versionCode&apos; app/build.gradle | awk &apos;{print $2}&apos; | tr -d &apos;&quot;&apos;" time="0.010663">
+      <testcase classname="fastlane.lanes" name="08: grep &apos;versionCode&apos; app/build.gradle | awk &apos;{print $2}&apos; | tr -d &apos;&quot;&apos;" time="0.015946">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="09: Switch to android download_dependencies lane" time="0.000239">
+      <testcase classname="fastlane.lanes" name="09: Switch to android download_dependencies lane" time="0.00042">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="10: androidDependencies" time="1.641664">
+      <testcase classname="fastlane.lanes" name="10: androidDependencies" time="2.909775">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="11: pwd" time="0.011004">
+      <testcase classname="fastlane.lanes" name="11: pwd" time="0.019301">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="12: assembleRelease" time="14.614319">
+      <testcase classname="fastlane.lanes" name="12: assembleRelease" time="27.480852">
         
       </testcase>
     
