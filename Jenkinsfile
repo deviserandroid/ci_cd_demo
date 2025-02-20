@@ -15,8 +15,7 @@ pipeline {
         // Configure bundler to use the user's home directory
         sh "bundle config set --local path '~/.bundle'"
         // Ensure gems installed properly
-        sh "pwd && ls -la"
-        sh "bundle check || bundle install --jobs=4 --retry=3"
+        sh "cd android && bundle check || bundle install --jobs=4 --retry=3"
       }
     }
     stage('Build') {
