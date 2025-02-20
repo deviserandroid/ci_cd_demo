@@ -8,7 +8,6 @@ pipeline {
     stage('Setup') {
       steps {
         echo "Setup"
-        sh "sudo chown -R $(whoami) ./"
         // Configure bundler to use the user's home directory
         sh "bundle config set --local path 'vendor/bundle'"
         // Install bundler in the user's home directory
