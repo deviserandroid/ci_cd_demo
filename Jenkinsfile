@@ -8,12 +8,13 @@ pipeline {
     stage('Setup') {
       steps {
         echo "Setup"
+        sh "sudo chown -R $(whoami) ./"
         // Configure bundler to use the user's home directory
         sh "bundle config set --local path 'vendor/bundle'"
         // Install bundler in the user's home directory
         sh "gem install --user-install bundler -v 2.4.22"
         // Ensure gems installed properly
-        sh "bundle check || sudo chown -R $USER ~/.bundle && sudo bundle install --jobs=4 --retry=3"
+        sh "bundle check || bundle install --jobs=4 --retry=3"
       }
     }
     stage('Build') {
