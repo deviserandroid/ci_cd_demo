@@ -9,7 +9,7 @@ pipeline {
       steps {
         echo "Setup"
         // Install bundler in the user's home directory
-        sh "gem install --user-install bundler"
+        sh "gem install --user-install bundler -v 2.4.22"
         // Configure bundler to use the user's home directory
         sh "bundle config set --local path '~/.bundle'"
         // Ensure gems installed properly
