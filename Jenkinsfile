@@ -1,13 +1,11 @@
 pipeline {
   agent any
-  environment {
-      GEM_HOME = "$HOME/.gem/ruby/3.1.3"
-      PATH = "$HOME/.gem/ruby/3.1.3/bin:$PATH"
-    }
+
   stages {
     stage('Setup') {
       steps {
         echo "Setup"
+        sh "export PATH=$HOME/.gem/ruby/3.1.3/bin:$PATH"
         // Configure bundler to use the user's home directory
         sh "bundle config set --local path 'vendor/bundle'"
         // Install bundler in the user's home directory
@@ -20,7 +18,6 @@ pipeline {
       steps {
         echo "Building"
         // Ensure bundler is available in PATH
-        sh "export PATH=$HOME/.gem/ruby/3.1.3/bin:$PATH"
         sh "bundle exec fastlane android build"
       }
     }
