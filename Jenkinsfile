@@ -10,7 +10,7 @@ pipeline {
         sh "bundle config set --local path 'vendor/bundle'"
         // Install bundler in the user's home directory
 
-        sh "chown -R zimble2020 ./"
+        sh "chown -R zimble2020 ~/Library/Ruby"
         sh "gem install bundler"
         // Ensure gems installed properly
         sh "bundle check || bundle install --jobs=4 --retry=3"
