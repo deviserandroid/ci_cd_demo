@@ -10,11 +10,11 @@ pipeline {
         echo "Setup"
         sh "pwd && ls -la"
         // Install bundler in the user's home directory
-        sh "sudo gem install --user-install bundler -v 2.4.22"
+        sh "gem install --user-install bundler -v 2.4.22"
         // Configure bundler to use the user's home directory
-        sh "sudo bundle config set --local path 'vendor/bundle'"
+        sh "bundle config set --local path 'vendor/bundle'"
         // Ensure gems installed properly
-        sh "sudo bundle check || sudo bundle install --jobs=4 --retry=3"
+        sh "bundle check || bundle install --jobs=4 --retry=3"
       }
     }
     stage('Build') {
