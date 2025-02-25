@@ -17,6 +17,18 @@ platform :android do
 
   lane :release do |options|
      sh "flutter pub get"
-     sh "flutter build apk --release"
+     sh "flutter build appbundle --release"
+      puts "Current Directory: /android"
+     upload_to_play_store(
+           release_status: "draft",
+           json_key: "../build/app/outputs/bundle/release/app-release.aab", #JSON_KEY_PATH
+           track: "internal",
+           package_name: "com.example.ci_cd_demo",
+           aab: "../build/app/outputs/bundle/release/app-release.aab",
+           skip_upload_metadata: true,
+           skip_upload_images: true,
+           skip_upload_screenshots: true,
+           skip_upload_apk: true
+         )
   end
 end
