@@ -31,13 +31,14 @@ platform :android do
   desc "Build Signed APK"
   private_lane :build_apk do |options|
       buildNumber = fetch_build_number.to_i
-
-      flutter pub get
+      #puts "Current Directory: android"
+      gradle(task: "clean androidDependencies", project_dir: 'android/')
+      #gradle(task: "androidDependencies")
 
       keyStorePath =  "#{sh("pwd").strip}/KeyStore"
       puts "Current Directory: #{keyStorePath}"
-      flutter build apk --release
-    )
+
+      gradle(task: "assembleRelease", project_dir: 'android/')
   end
 
   private_lane :fetch_build_number do

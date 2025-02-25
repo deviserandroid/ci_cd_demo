@@ -16,58 +16,7 @@ platform :android do
   end
 
   lane :release do |options|
-    build_apk
-    upload_to_play_store(
-      release_status: "draft",
-      json_key: JSON_KEY_PATH
-      )
+     sh "flutter pub get"
+     sh "flutter build apk --release"
   end
-
-  lane :build do |options|
-    update_build_number
-    build_apk
-  end
-
-  # Private Lanes
-  desc "Download dependencies"
-  private_lane :download_dependencies do
-    gradle(task: "androidDependencies")
-  end
-
-  desc "Build Signed APK"
-  private_lane :build_apk do |options|
-      buildNumber = fetch_build_number.to_i
-      download_dependencies
-
-      keyStorePath =  "#{sh("pwd").strip}/KeyStore"
-      puts "Current Directory: #{keyStorePath}"
-      gradle(
-        task: "assemble",
-        build_type: "Release",
-        print_command: true,
-        properties: {
-            "android.injected.version.code" => buildNumber,
-            "android.injected.signing.store.file" =>  keyStorePath,
-            "android.injected.signing.store.password" =>  KEYSTORE_PASSWORD,
-            "android.injected.signing.key.alias" =>  KEYSTORE_ALIAS,
-            "android.injected.signing.key.password" =>  KEYSTORE_ALIAS_PASSWORD
-      }
-    )
-  end
-
-  private_lane :fetch_build_number do
-    version_code = sh("grep 'versionCode' app/build.gradle | awk '{print $2}' | tr -d '\"'")
-    version_code.strip
-  end
-
-  private_lane :update_build_number do
-    buildNumber = fetch_build_number.to_i + 1
-
-    value = sh(command: "echo #{buildNumber} > #{BUILD_NUMBER_PATH}")
-  end
-
-  lane :generate_changelog_text do
-    "#{git_branch}\n#{changelog_from_git_commits( commits_count: "10")}"
-  end
-
 end
