@@ -32,7 +32,6 @@ platform :android do
   desc "Download dependencies"
   private_lane :download_dependencies do
     flutter pub get
-    #gradle(task: "androidDependencies")
   end
 
   desc "Build Signed APK"
