@@ -9,12 +9,6 @@ pipeline {
         sh "bundle config set --local path 'vendor/bundle'"
         // Install bundler in the user's home directory
         sh "gem install --user-install bundler"
-
-        sh "ruby -v"
-        sh "rbenv install 3.2.2"
-        sh "rbenv global 3.2.2"
-        sh "rbenv rehash"
-        sh "ruby -v"
         sh "gem install --user-install bundler fastlane"
         // Ensure gems installed properly
         //sh "bundle check || bundle install --jobs=4 --retry=3"
