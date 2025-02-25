@@ -19,7 +19,7 @@ pipeline {
         echo "Building"
         // Ensure bundler is available in PATH
         sh "cd android"
-        sh "bundle exec fastlane android build"
+        sh "bundle exec fastlane android release"
       }
     }
   }
