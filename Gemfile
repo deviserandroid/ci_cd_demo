@@ -4,3 +4,5 @@ source "https://rubygems.org"
 
 # gem "rails"
 gem 'fastlane'
+gem "fastlane-plugin-flutter_version", "1.1.15"
+
