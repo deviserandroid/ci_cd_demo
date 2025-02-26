@@ -16,42 +16,22 @@ platform :android do
   end
 
   lane :release do |options|
-    build_apk
-    #upload_to_play_store(
-     # release_status: "draft",
-      #json_key: JSON_KEY_PATH
-      #)
+     sh "flutter pub get"
+     sh "flutter build appbundle --release"
+     puts "Current Directory: /android"
+     version = flutter_version()
+     upload_to_play_store(
+           release_status: "draft",
+           json_key: "../build/app/outputs/bundle/release/app-release.aab", #JSON_KEY_PATH
+           track: "internal",
+           package_name: "com.example.ci_cd_demo",
+           aab: "../build/app/outputs/bundle/release/app-release.aab",
+           skip_upload_metadata: true,
+           skip_upload_images: true,
+           skip_upload_screenshots: true,
+           skip_upload_apk: true,
+           version_code: version["version_code"], # From pubspec.yaml
+           version_name: version["version_name"]
+         )
   end
-
-  lane :build do |options|
-    update_build_number
-    build_apk
-  end
-
-  desc "Build Signed APK"
-  private_lane :build_apk do |options|
-      buildNumber = fetch_build_number.to_i
-      gradle(task: "clean androidDependencies", project_dir: 'android/')
-
-      keyStorePath =  "#{sh("pwd").strip}/KeyStore"
-      puts "Current Directory: #{keyStorePath}"
-
-      gradle(task: "assembleRelease", project_dir: 'android/')
-  end
-
-  private_lane :fetch_build_number do
-    version_code = sh("grep 'versionCode' android/app/build.gradle | awk '{print $2}' | tr -d '\"'")
-    version_code.strip
-  end
-
-  private_lane :update_build_number do
-    buildNumber = fetch_build_number.to_i + 1
-
-    value = sh(command: "echo #{buildNumber} > #{BUILD_NUMBER_PATH}")
-  end
-
-  lane :generate_changelog_text do
-    "#{git_branch}\n#{changelog_from_git_commits( commits_count: "10")}"
-  end
-
 end
