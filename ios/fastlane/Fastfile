@@ -33,7 +33,12 @@ platform :ios do
         app_store_connect_api_key(
               key_id: "#{APP_STORE_API_KEY_ID}",
               issuer_id: "#{APP_STORE_API_ISSUER_ID}",
-              key_content: "#{APPSTORE_CONNECT_API_KEY_BASE64}",
+              key_content: "-----BEGIN PRIVATE KEY-----
+                            MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgyQt7vTv5wdQ/3B7s
+                            r60W6AKRsmr4Zwf1rPa+yt5mZvugCgYIKoZIzj0DAQehRANCAAT71FWxS080XYBZ
+                            aaAALku3wDISB/RVpQxhqn+vcsVSS8q8Boo7ybYGBWqJ8ZHWiahRySoTKACsmRiU
+                            3HdNBRU3
+                            -----END PRIVATE KEY-----", # "#{APPSTORE_CONNECT_API_KEY_BASE64}",
               #key_filepath: "fastlane/app_store_connect_api_key.p8",
             )
 
