@@ -5,51 +5,17 @@
     
     
       
-      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.000422">
+      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.000569">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="1: Switch to ios setup_variables lane" time="0.000302">
+      <testcase classname="fastlane.lanes" name="1: Switch to ios setup_variables lane" time="0.001607">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="2: flutter clean" time="4.644933">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="3: flutter pub get" time="3.322425">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="4: pod install" time="1.585212">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="5: ls" time="0.010044">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="6: ls" time="0.01026">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="7: xcodebuild -workspace Runner.xcworkspace \
-              -scheme Runner clean archive -configuration release \
-              -sdk iphoneos -archivePath Runner.xcarchive" time="40.730154">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="8: xcodebuild -exportArchive -archivePath  Runner.xcarchive \
-              -exportOptionsPlist  exportOptions.plist \
-              -exportPath  cicdapp.ipa" time="88.972297">
+      <testcase classname="fastlane.lanes" name="2: app_store_connect_api_key" time="34.337523">
         
       </testcase>
     
