@@ -16,7 +16,7 @@ platform :ios do
   lane :release do |options|
     sh 'flutter clean'
     sh 'flutter pub get'
-    sh 'pod install'
+    #sh 'pod install'
     # sh 'flutter build ios --release'
     sh 'ls'
     Dir.chdir("..") do
