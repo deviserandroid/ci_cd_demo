@@ -1,3 +1,4 @@
+# Fastlane script is written in Ruby script language
 default_platform(:android)
 
 platform :android do

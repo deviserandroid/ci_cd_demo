@@ -1,3 +1,4 @@
+// script used for a Jenkinsfile is written in a Groovy-based Domain-Specific Language (DSL)
 pipeline {
   agent any
 
@@ -18,7 +19,8 @@ pipeline {
       steps {
         echo "Building"
         // Ensure bundler is available in PATH
-        sh "cd android"
+        sh 'puts "Current Directory: /android"'
+        sh 'echo "Current directory: $(pwd)"'
         sh "ls"
         sh "bundle exec fastlane android release"
       }
