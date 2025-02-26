@@ -9,6 +9,7 @@ platform :ios do
     APP_STORE_API_ISSUER_ID = ENV['APP_STORE_API_ISSUER_ID']
     TEAM_ID = ENV['TEAM_ID']
     TEAM_NAME = ENV['TEAM_NAME']
+    SLACK_WEBHOOK = ENV['SLACK_WEBHOOK']
   end
 
   before_all do
@@ -16,34 +17,46 @@ platform :ios do
   end
 
   lane :release do |options|
-    # sh 'flutter clean'
-    # sh 'flutter pub get'
-    # sh 'pod install'
+    sh 'flutter clean'
+    sh 'flutter pub get'
+    sh 'pod install'
     # sh 'flutter build ios --release'
     Dir.chdir("..") do
 
-        sh 'xcodebuild -workspace Runner.xcworkspace \
-             -scheme Runner clean archive -configuration release \
-             -sdk iphoneos -archivePath Runner.xcarchive'
+#        sh 'xcodebuild -workspace Runner.xcworkspace \
+#             -scheme Runner clean archive -configuration release \
+#             -sdk iphoneos -archivePath Runner.xcarchive'
 
-        sh 'xcodebuild -exportArchive -archivePath  Runner.xcarchive \
-             -exportOptionsPlist  exportOptions.plist \
-             -exportPath  cicdapp.ipa'
+#        sh 'xcodebuild -exportArchive -archivePath  Runner.xcarchive \
+#             -exportOptionsPlist  exportOptions.plist \
+#             -exportPath  cicdapp.ipa'
 
-        app_store_connect_api_key(
-              key_id: APP_STORE_API_KEY_ID,
-              issuer_id: APP_STORE_API_ISSUER_ID,
-              is_key_content_base64: true,
-              key_content: APPSTORE_CONNECT_API_KEY_BASE64,
+#        app_store_connect_api_key(
+#              key_id: APP_STORE_API_KEY_ID,
+#              issuer_id: APP_STORE_API_ISSUER_ID,
+#             is_key_content_base64: true,
+#              key_content: APPSTORE_CONNECT_API_KEY_BASE64,
               # key_filepath: "ios/fastlane/AuthKey_WSN2L2RV96.p8",
-            )
+#            )
 
-        upload_to_testflight(
-           app_identifier: APP_BUNDLE_ID,
-           ipa: 'ios/cicdapp.ipa/ci_cd_demo.ipa',
-           changelog: 'Test the build and report the bugs.',
-           team_id: TEAM_ID,
-           team_name: TEAM_NAME
+#        upload_to_testflight(
+#           app_identifier: APP_BUNDLE_ID,
+#           ipa: 'ios/cicdapp.ipa/ci_cd_demo.ipa',
+#           changelog: 'Test the build and report the bugs.',
+#           team_id: TEAM_ID,
+#           team_name: TEAM_NAME
+#        )
+
+        slack(
+          message: "App successfully distributed on the App Store!",
+          #channel: "#channel",  # Optional, by default will post to the default channel configured for the POST URL.
+          success: true,        # Optional, defaults to true.
+          slack_url: SLACK_WEBHOOK,
+          # slack_url: "https://hooks.slack.com/services/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"
+          payload: {  # Optional, lets you specify any number of your own Slack attachments.
+            "Build Date" => Time.new.to_s,
+            "Built by" => "Jenkins",
+          },
         )
     end
   end
