@@ -29,6 +29,8 @@ pipeline {
     stage('Build iOS') {
       steps {
         echo "Executing Fastlane: 'release' for iOS"
+        sh 'echo "Current directory: $(pwd)"'
+
         // Ensure bundler is available in PATH
         dir("ios") {
            sh 'echo "Current directory: $(pwd)"'
