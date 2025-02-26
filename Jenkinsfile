@@ -19,7 +19,7 @@ pipeline {
       steps {
         echo "Building"
         // Ensure bundler is available in PATH
-        dir("") {
+        dir("android") {
            sh 'echo "Current directory: $(pwd)"'
            sh "ls"
            sh "bundle exec fastlane android release"
