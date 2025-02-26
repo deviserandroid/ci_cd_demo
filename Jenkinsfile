@@ -15,14 +15,26 @@ pipeline {
         sh "bundle check || bundle install --jobs=4 --retry=3"
       }
     }
-    stage('Build') {
+    stage('Build Android') {
       steps {
-        echo "Building"
+        echo "Executing Fastlane: 'release' for Android"
         // Ensure bundler is available in PATH
         dir("android") {
            sh 'echo "Current directory: $(pwd)"'
            sh "ls"
            sh "bundle exec fastlane android release"
+        }
+      }
+    }
+
+    stage('Build iOS') {
+      steps {
+        echo "Executing Fastlane: 'release' for iOS"
+        // Ensure bundler is available in PATH
+        dir("ios") {
+           sh 'echo "Current directory: $(pwd)"'
+           sh "ls"
+           sh "bundle exec fastlane ios release"
         }
       }
     }
