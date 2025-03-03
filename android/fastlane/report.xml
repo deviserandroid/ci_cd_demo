@@ -5,22 +5,42 @@
     
     
       
-      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.000453">
+      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.000448">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="1: Switch to android setup_variables lane" time="0.000216">
+      <testcase classname="fastlane.lanes" name="1: Switch to android setup_variables lane" time="0.000299">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="2: flutter pub get" time="1.143042">
+      <testcase classname="fastlane.lanes" name="2: Switch to android verifyPlayConsoleConnection lane" time="0.000521">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="3: flutter build appbundle --release" time="3.164478">
+      <testcase classname="fastlane.lanes" name="3: validate_play_store_json_key" time="0.266751">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="4: flutter pub get" time="1.755468">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="5: flutter build appbundle --release" time="8.809733">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="6: flutter_version" time="0.006361">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="7: upload_to_play_store" time="38.009067">
         
       </testcase>
     

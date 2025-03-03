@@ -17,22 +17,31 @@ platform :android do
   end
 
   lane :release do |options|
+     verifyPlayConsoleConnection
+
      sh "flutter pub get"
      sh "flutter build appbundle --release"
      puts "Current Directory: /android"
      version = flutter_version()
+
      upload_to_play_store(
            release_status: "draft",
-           json_key: "../build/app/outputs/bundle/release/app-release.aab", #JSON_KEY_PATH
+           json_key: JSON_KEY_PATH,
            track: "internal",
-           package_name: "com.example.ci_cd_demo",
+           package_name: PACKAGE_NAME,
            aab: "../build/app/outputs/bundle/release/app-release.aab",
-           skip_upload_metadata: true,
+           #skip_upload_metadata: true,
            skip_upload_images: true,
            skip_upload_screenshots: true,
            skip_upload_apk: true,
            version_code: version["version_code"], # From pubspec.yaml
            version_name: version["version_name"]
          )
+  end
+
+  lane :verifyPlayConsoleConnection do
+     validate_play_store_json_key(
+       json_key: JSON_KEY_PATH
+     )
   end
 end
