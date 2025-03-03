@@ -46,7 +46,7 @@ platform :ios do
         )
 
         slack(
-          message: "App successfully distributed on the App Store!",
+          message: "CI CD Demo iOS App upload on the Test Flight for testing!",
           #channel: "#channel",  # Optional, by default will post to the default channel configured for the POST URL.
           success: true,        # Optional, defaults to true.
           slack_url: SLACK_WEBHOOK,

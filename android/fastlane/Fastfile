@@ -37,11 +37,26 @@ platform :android do
            version_code: version["version_code"], # From pubspec.yaml
            version_name: version["version_name"]
          )
+
+         notify_channel
   end
 
   lane :verifyPlayConsoleConnection do
      validate_play_store_json_key(
        json_key: JSON_KEY_PATH
      )
+  end
+
+  lane :notify_channel do
+     slack(
+               message: "CI CD Demo Android App upload on the Play Store for internal testing!",
+               #channel: "#channel",  # Optional, by default will post to the default channel configured for the POST URL.
+               success: true,        # Optional, defaults to true.
+               slack_url: SLACK_WEBHOOK,
+               payload: {  # Optional, lets you specify any number of your own Slack attachments.
+                 "Build Date" => Time.new.to_s,
+                 "Built by" => "Jenkins",
+               },
+             )
   end
 end
