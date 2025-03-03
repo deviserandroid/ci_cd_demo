@@ -14,6 +14,7 @@ pipeline {
         sh "gem install --user-install bundler cocoapods"
         // Ensure gems installed properly
         sh "bundle check || bundle install --jobs=4 --retry=3"
+
       }
     }
     stage('Build Android') {
