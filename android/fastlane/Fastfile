@@ -26,7 +26,7 @@ platform :android do
      version = flutter_version()
 
      upload_to_play_store(
-           release_status: "draft",
+           release_status: "completed", # defaults to "completed", needs your app to be reviewed for closed testing (Alpha)
            json_key: JSON_KEY_PATH,
            track: "internal",
            package_name: PACKAGE_NAME,
